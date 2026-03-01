@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 //   POST /api/auth/register
 const registerUser = async (req, res) => {
+ 
   try {
     const { name, email, password } = req.body;
 
@@ -16,6 +17,11 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    let imageUrl = "";
+    if (req.file) {
+      imageUrl = req.file.path;
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -23,6 +29,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      profileImage: imageUrl,
     });
 
     //make token
@@ -45,6 +52,7 @@ const registerUser = async (req, res) => {
           _id: user._id,
           name: user.name,
           email: user.email,
+          profileImage: user.profileImage,
         },
       });
     } else {
@@ -54,6 +62,7 @@ const registerUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 //   POST /api/auth/register
 
 const loginUser = async (req, res) => {
@@ -108,7 +117,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-// get all user 
+// get all user
 const getAllUsers = async (req, res) => {
   try {
     //params
@@ -129,13 +138,13 @@ const getAllUsers = async (req, res) => {
     // 3. total user count
     const total = await userModel.countDocuments(filter);
 
-    // 4. user list 
+    // 4. user list
     const users = await userModel
       .find(filter)
-      .select("-password") 
+      .select("-password")
       .skip((page - 1) * perPage)
       .limit(perPage)
-      .sort({ createdAt: -1 }); 
+      .sort({ createdAt: -1 });
 
     // 5. response
     res.status(200).json({

@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
+const authRoutes = require("./routes/authRoutes");
+const imageUploadRoutes = require("./routes/imageupuloadRoutes")
+const categoryRoutes = require("./routes/categoryRoutes")
+
 
 const app = express();
 
@@ -21,5 +24,7 @@ app.get("/hello", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api", imageUploadRoutes)
+app.use("/api", categoryRoutes)
 
 module.exports = app;

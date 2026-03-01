@@ -3,11 +3,12 @@ const router = express.Router();
 const userControllers = require("../controllers/authcontollers");
 const authMiddleware = require("../middlewares/authMiddleware")
 const adminMiddlwarre = require("../middlewares/adminMiddleware")
+const { upload } = require("../config/cloudinary"); 
 
 
-// Registration Route
-// URL: POST /api/auth/register
-router.post("/register", userControllers.registerUser);
+
+
+router.post("/register", upload.single("image"), userControllers.registerUser);
 router.post("/login", userControllers.loginUser);
 router.get("/all-users", authMiddleware.protect, adminMiddlwarre.isAdmin, userControllers.getAllUsers);
 
