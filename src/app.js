@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authRoutes");
 const imageUploadRoutes = require("./routes/imageupuloadRoutes")
 const categoryRoutes = require("./routes/categoryRoutes")
+const productRoutes = require("./routes/productRoutes")
 
 
 const app = express();
@@ -26,5 +27,6 @@ app.get("/hello", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api", imageUploadRoutes)
 app.use("/api", categoryRoutes)
+app.use("/api", productRoutes)
 
 module.exports = app;
