@@ -13,5 +13,8 @@ const productUpload = upload.fields([
 
 
 router.post("/create-product", protect, isAdmin,  productUpload, productContollers.createProduct);
+router.get("/product/:id", protect, productContollers.getProductDetails)
+router.get("/products", protect, productContollers.getAllProducts)
+router.delete("/product-delete/:id", protect, isAdmin, productContollers.deleteProduct)
 
 module.exports = router;
