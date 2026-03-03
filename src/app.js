@@ -2,15 +2,19 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authRoutes");
-const imageUploadRoutes = require("./routes/imageupuloadRoutes")
-const categoryRoutes = require("./routes/categoryRoutes")
-const productRoutes = require("./routes/productRoutes")
-
+const imageUploadRoutes = require("./routes/imageupuloadRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://127.0.0.1:5500", "http://127.0.0.1:5501","http://127.0.0.1:5500",],
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,8 +29,8 @@ app.get("/hello", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api", imageUploadRoutes)
-app.use("/api", categoryRoutes)
-app.use("/api", productRoutes)
+app.use("/api", imageUploadRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
 
 module.exports = app;

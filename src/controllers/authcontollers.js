@@ -168,8 +168,44 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getLoggedUser = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      data: req.user,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+  
+    res.cookie('token', '', {
+      httpOnly: true,
+      expires: new Date(0), 
+      secure: process.env.NODE_ENV === 'production', 
+      sameSite: 'strict',
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Logged out successfully'
+    });
+  } catch (error) {
+    console.error("Logout Error:", error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error during logout'
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getAllUsers,
+  getLoggedUser,
+  logout
 };
