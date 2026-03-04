@@ -6,6 +6,7 @@ const imageUploadRoutes = require("./routes/imageupuloadRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 const reviewRoutes = require("./routes/reviewRoutes")
+const orderRoutes = require("./routes/orderRoutes")
 
 const app = express();
 
@@ -36,5 +37,6 @@ app.use("/api", imageUploadRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 app.use("/api", reviewRoutes)
+app.use("/api", orderRoutes)
 
 module.exports = app;
